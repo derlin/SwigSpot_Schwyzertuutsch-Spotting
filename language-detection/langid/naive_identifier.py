@@ -24,7 +24,7 @@ class NaiveIdentifier:
         if klass == TfidfVectorizer:
             # default vectorizer arguments
             self.options = dict(analyzer='char',  ngram_range=(3, 5), max_features=3000,
-                    sublinear_tf=True, use_idf=True,  norm='l2')
+                    sublinear_tf=True, use_idf=False,  norm='l2')
             # update with arguments
             self.options.update(vectorizer_options)
         else:

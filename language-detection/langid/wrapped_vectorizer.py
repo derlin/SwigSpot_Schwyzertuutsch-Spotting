@@ -40,11 +40,16 @@ class WrappedVectorizer:
                 del parameters[key]
         # forward the remaining to the scikit vectorizer
         self.vectorizer.set_params(**parameters)
+        # don't forget to return self
+        # see https://stackoverflow.com/questions/28124366/can-gridsearchcv-be-used-with-a-custom-classifier
         return self
     
 
-    def get_params(self, **parameters):
-        return dict(**dict(sg_only=self.sg_only, sanitizer=self.sanitizer), **self.vectorizer.get_params())
+    def get_params(self, deep=True):
+        if deep:
+            return dict(**dict(sg_only=self.sg_only, sanitizer=self.sanitizer), **self.vectorizer.get_params())
+        else:
+            return dict(sg_only=self.sg_only, sanitizer=self.sanitizer)
 
 
     def __repr__(self):
