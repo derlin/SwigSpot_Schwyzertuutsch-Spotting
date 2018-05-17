@@ -17,7 +17,7 @@ class NaiveIdentifier:
                 ngram_range=(3, 5), 
                 max_features=3000,
                 sublinear_tf=True, 
-                use_idf=True, 
+                use_idf=False, 
                 norm='l2'
         """ 
         self.klass = klass

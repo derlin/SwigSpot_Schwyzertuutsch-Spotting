@@ -61,16 +61,15 @@ def load_split_data(test_size=0.2, random_state=0, **kwargs):
 # ==========================
 
 def print_results(y_real, y_predicted, labels=langs):
+    print("accuracy: %.4f" % metrics.accuracy_score(y_real, y_predicted))
+    print()
     print(metrics.classification_report(y_real, y_predicted, target_names=labels, digits=4))
 
-
-def plot_confusion_matrix(y_real, y_predicted, normalised=False, figsize=(10,6), labels=langs):#(12, 8)):
+def plot_confusion_matrix(y_real, y_predicted, normalised=False, figsize=(10,6), labels=langs, title='Confusion Matrix for Languages'):
     cm = metrics.confusion_matrix(y_real, y_predicted)
-    title = 'Confusion Matrix for Languages'
     fmt = ''
     if normalised: 
         cm = cm.astype('float')/cm.sum(axis=1)[:, np.newaxis]
-        title += ' normalised'
         fmt = '.3f'
         
     plt.figure(figsize=figsize)

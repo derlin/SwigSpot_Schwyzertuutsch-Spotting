@@ -75,6 +75,7 @@ class NaiveVectorizer:
         self._feature_names = uniques[idx_sorted][:self.max_features] 
 
         values = zip(self._feature_weights, range(0, self._feature_names.size+1))
+        # features: a dictionary 'N-gram' => (weight, idx)
         self._features = dict(zip(self._feature_names, values))
 
 
@@ -112,6 +113,7 @@ class NaiveVectorizer:
         
         # vector of "x": logarithm of observed ngrams
         vec = 1 + np.log(np.array(freqs))
+        # lookup the index of the observed ngrams in the dictionary
         idx = np.array([ self._features[k][1] for k in uniq])
         mat = csr_matrix((vec,([0]*vec.size, idx)), shape=(1, self._feature_names.size))
 
