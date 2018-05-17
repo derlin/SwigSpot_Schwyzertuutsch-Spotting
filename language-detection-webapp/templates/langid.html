@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block header_include %}
+{% endblock %}
+
+{% block js_include %}
+{% endblock %}
+
+{% block body %}
+    <h1>SG Language detection</h1>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Query
+        </div>
+        <div class="card-body">
+            <p>Enter some text with potential Swiss German sentences:</p>
+            <form class="form" method="post">
+                {% from '_formhelpers.html' import render_field %}
+                {% from 'wtf.html' import form_field %}
+                {{ form.hidden_tag() }}
+                {{ form_field(form.text, placeholder="Text to test", rows=6) }}
+                {{ form_field(form.model_class) }}
+                <input type="submit" class="btn btn-primary" value="Go!">
+            </form>
+        </div>
+    </div>
+
+    {% if results is defined %}
+        {% include '_results-proba.html' %}
+    {% endif %}
+
+{% endblock %}

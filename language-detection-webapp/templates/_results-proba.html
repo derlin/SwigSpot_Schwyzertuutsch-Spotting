@@ -1,0 +1,151 @@
+<style type="text/css">
+
+    .badge {
+        font-size: 100%;
+        font-weight: normal;
+    }
+
+    .card {
+        margin-top: 20px;
+    }
+
+    #filters {
+        padding: 5px 3px;
+        margin: 0;
+        margin-bottom: 10px;
+        background: #efefef;
+    }
+
+    .results .sentence:hover {
+    {#background-color: #ddd;#}
+    }
+
+    .sentence {
+        padding: .3rem 1.25rem;
+    }
+
+    .sentence.nocolor span {
+        background: transparent !important;
+        opacity: 1 !important;
+    }
+
+    /*.sentence:nth-child(2n) { background: #f4f4f4; } */
+
+    .sentence {
+        padding: 0;
+    {#border: none;#}{#margin-bottom: 0;#}
+    }
+
+    .sg-only .sentence span:not(.sg), .sentence span.proba-low {
+        display: none;
+    }
+
+    .sentence span {
+        display: inline-block;
+        margin: 3px;
+    }
+
+    .text-white a {
+        color: white;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+
+        // enable tooltips
+        $('[data-toggle="tooltip"]').tooltip({placement: 'left'});
+
+        // live filtering
+        input_proba.addEventListener('change', function () {
+            let proba = parseFloat(input_proba.value);
+            if (proba < 0 || proba >= 1) proba = 0;
+
+            $('.sentence span').each(function () {
+                if ($(this).attr('proba') < proba) $(this).addClass('proba-low');
+                else $(this).removeClass('proba-low');
+            });
+            after_change();
+        });
+
+        checkbox_colors.addEventListener('change', function () {
+            let sentences = $('.sentence');
+            if (checkbox_colors.checked) {
+                sentences.removeClass('nocolor');
+            } else {
+                sentences.addClass('nocolor');
+            }
+        });
+
+        checkbox_sg.addEventListener('change', function () {
+            if (checkbox_sg.checked) $(results).addClass('sg-only');
+            else $(results).removeClass('sg-only');
+            after_change();
+        });
+
+        function after_change() {
+            $('li.sentence').show();
+            $('li.sentence:not(:has(span:visible))').hide();
+            span_num_displayed.textContent = $('li.sentence:visible').length;
+        }
+
+    });
+</script>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Results {% if form.url %}from <a href="{{ form.url.data }}" target="_blank">{{ form.url.data }}</a>{% endif %}
+    </div>
+    <div class="card-body" id="results">
+
+        {% if not results %}
+            <p>No results :(.</p>
+        {% else %}
+            <div class="row form-rows align-items-center" id="filters">
+                <div class="col-auto">
+                    Labels:
+                    {% for l in labels %}
+                        <span class="badge" style="background:{{ color(loop.index - 1) }}">{{ l }}</span>
+                    {% endfor %}
+                </div>
+                <div class="col-auto mr-auto">
+                    displayed: <span id="span_num_displayed">{{ results|length }}</span>/{{ results|length }}
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&gt;=</div>
+                        </div>
+                        <input type="number" class="form-control" id="input_proba" placeholder="min proba">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_colors" checked="checked">
+                        <label class="form-check-label" for="checkbox_colors">Show colors</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_sg">
+                        <label class="form-check-label" for="checkbox_sg">SG only</label>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-group list-group-flush">
+                {% for r in results %}
+                    <li class="sentence list-group-item">
+                        {% for s, l, p in r %}
+                            <span class="{{ labels[l] }}"
+                                  proba="{{ p[l] }}"
+                                  data-toggle="tooltip" data-html="true"
+                                  title="<b>{{ labels[l] }}</b> with probability <b>{{ '%.2f' % p[l] }}</b> <br><small>{{ format_proba(p, labels) }}</small>"
+                                  style="background-color: {{ color(l,p) }}; opacity: {{ p[l] }}">{{ s }}</span>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
