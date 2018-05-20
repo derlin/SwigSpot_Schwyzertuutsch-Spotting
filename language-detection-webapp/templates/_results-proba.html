@@ -43,6 +43,8 @@
     .sentence span {
         display: inline-block;
         margin: 3px;
+        min-width: 20px;
+        min-height: 20px;
     }
 
     .text-white a {
@@ -141,7 +143,7 @@
                                   proba="{{ p[l] }}"
                                   data-toggle="tooltip" data-html="true"
                                   title="<b>{{ labels[l] }}</b> with probability <b>{{ '%.2f' % p[l] }}</b> <br><small>{{ format_proba(p, labels) }}</small>"
-                                  style="background-color: {{ color(l,p) }}; opacity: {{ p[l] }}">{{ s }}</span>
+                                  style="background-color: {{ color(l,p) }}; opacity: {{ [p[l], 0.2] | max  }}">{{ s }}</span>
                         {% endfor %}
                     </li>
                 {% endfor %}

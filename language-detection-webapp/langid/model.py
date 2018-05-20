@@ -3,6 +3,7 @@ import re
 from os import path
 import numpy as np
 from typing import List, Tuple
+from .naive_identifier import NaiveIdentifier
 
 DEFAULT_LABELS = ['de', 'fr', 'en', 'it', 'sg']
 

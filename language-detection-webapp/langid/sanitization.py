@@ -50,6 +50,14 @@ def sanitize_v1(text: str) -> str:
     text = remove_manyspaces_v1(text)
     return text.strip()
 
+# ----------
+
+reg_nonletters_v2 =  re.compile("[^\w ]|\d|_")
+
+def sanitize_v2(text: str) -> str:
+    text = re.sub(reg_nonletters_v2, " ", text)
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
 
 # from alphabet_detector import AlphabetDetector
 # ad = AlphabetDetector()

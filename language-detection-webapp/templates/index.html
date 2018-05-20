@@ -1,26 +1,6 @@
 {% extends 'layout.html' %}
 {% block header_include %}
-    <style type="text/css">
-        .card {
-            margin-top: 20px;
-        }
 
-        .results .sentence:hover {
-        {#background-color: #ddd;#}
-        }
-
-        .sentence {
-            padding: .3rem 1.25rem;
-        }
-
-        .sentence:nth-child(2n) {
-            background: #f4f4f4;
-        }
-
-        .text-white a {
-            color: white;
-        }
-    </style>
 {% endblock %}
 
 {% block js_include %}
@@ -29,13 +9,8 @@
             document.querySelector('label[for="' + what + '"] span').textContent = value;
         }
 
-        function show_hide_kmin(extractor) {
-            document.getElementById('kMin-container').style.display =
-                extractor === 'KeepEverythingWithMinKWordsExtractor' ? 'block' : 'none';
-        }
-
         $(function () {
-            {% for i in ['kMin', 'wMin'] %}
+            {% for i in ['wMin'] %}
                 document.querySelector('label[for="{{ i }}"]').innerHTML = '{{ form[i].label.text }}: <span>{{ form[i].data }}</span>';
                 document.getElementsByName('{{ i }}')[0].addEventListener('change', (evt) => {
                     let elt = evt.srcElement || evt.target;
@@ -43,12 +18,6 @@
                 });
             {% endfor %}
 
-            document.querySelector('[name=extractor_class]').addEventListener('change', (evt) => {
-                let elt = evt.srcElement || evt.target;
-                show_hide_kmin(elt.value);
-            });
-
-            show_hide_kmin('{{ form.extractor_class.data }}');
         });
     </script>
 {% endblock %}
@@ -68,35 +37,16 @@
                 {{ form.hidden_tag() }}
                 {{ form_field(form.url, placeholder="http://example.com") }}
                 {{ form_field(form.extractor_class) }}
+                {{ form_field(form.model_class) }}
                 {{ form_field(form.wMin, min=form.wMin.validators[-1].min, max=form.wMin.validators[-1].max) }}
-                <div id="kMin-container">
-                    {{ form_field(form.kMin,min=form.kMin.validators[-1].min, max=form.kMin.validators[-1].max) }}
-                </div>
+                {{ form_field(form.return_raw) }}
                 <input type="submit" class="btn btn-primary" value="Go!">
             </form>
         </div>
     </div>
 
-    {% if results %}
-
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                Results from <a href="{{ form.url.data }}" target="_blank">{{ form.url.data }}</a>
-            </div>
-            <div class="card-body results">
-                <p class="text-info text-right">
-                    <em>Note:</em> <span class="bg-warning">Non Swiss German sentences</span> are highlighted.
-                </p>
-                <ul class="list-group list-group-flush">
-                    {% for r in results %}
-                        <li class="sentence list-group-item">
-                            {% for k,v in r %}
-                                <span class="{{ 'sg' if k else 'other bg-warning' }}">{{ v }}</span>
-                            {% endfor %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+    {% if results is defined %}
+        {% include '_results-proba.html' %}
     {% endif %}
+
 {% endblock %}

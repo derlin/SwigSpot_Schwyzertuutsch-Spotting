@@ -55,7 +55,7 @@ class TextForm(FlaskForm):
 
 
 @blueprint_langid.route('/', methods=['GET', 'POST'])
-@templated('index-all.html')
+@templated('index.html')
 def crawl():
     form = UrlForm(request.form)
 

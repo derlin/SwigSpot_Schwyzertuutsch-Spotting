@@ -1,7 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from scipy.sparse import csr_matrix
 import numpy as np
-from sklearn import feature_extraction
+from sklearn.preprocessing import normalize
 from typing import List
 
 
@@ -56,13 +55,25 @@ class NaiveIdentifier:
         self.fit(X_train, y_train)
         return self.predict(X_train)
         
-    def predict(self, X: List[int]) -> csr_matrix:
+    def predict(self, X: List[int]):
         """
         Transform the data and sum the feature vectors using each vectorizer
         then return the labels of the vectorizer with the maximal score 
         :param X: the dataset
-        :return: the most probable class
+        :return: the most probable class as a numpy matrix
         """
         mat = np.hstack([v.transform(X).sum(axis=1) for v in self.vectorizers])
         self.last_scores = mat # for later use, just in case
         return mat.argmax(axis=1).A1
+
+
+    def predict_proba(self, X: List[int]):
+        """
+        Transform the data and sum the feature vectors using each vectorizer
+        then return the score for each language
+        :param X: the dataset
+        :return: the most probable class as a numpy.ndarray
+        """
+        mat = np.hstack([v.transform(X).sum(axis=1) for v in self.vectorizers])
+        self.last_scores = mat # for later use, just in case
+        return normalize(mat, norm='l1', axis=1)
