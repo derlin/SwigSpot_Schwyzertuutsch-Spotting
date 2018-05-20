@@ -1,6 +1,6 @@
 package ch.derlin.langid.processing
 
-import ch.derlin.langid.Result
+import ch.derlin.langid.data.Result
 import ch.derlin.langid.helpers.{GrpcClient, TextExtractor}
 
 
@@ -16,7 +16,11 @@ class PageProcessor(client: GrpcClient,
     import scala.collection.JavaConverters._
     try {
       val doc = TextExtractor.getDoc(url)
-      val text = doc.getTextBlocks.asScala.filter(_.isContent).map(_.getText)
+      // by filtering isContent, we avoid getting very bad text such as css, but
+      // we also miss some interesting, small sentence...
+      // TODO: make a decision !
+      // val text = doc.getTextBlocks.asScala.filter(_.isContent).map(_.getText)
+      val text = doc.getTextBlocks.asScala.map(_.getText)
       val filtered = text.zipWithIndex.filter(t => filterSentence(t._1))
       (filtered, if (doc.getTitle != null) doc.getTitle else "", None)
     } catch {

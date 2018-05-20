@@ -1,6 +1,7 @@
 package ch.derlin.langid
 
 
+import ch.derlin.langid.data.Summary
 import ch.derlin.langid.helpers.{Config, GrpcClient, MongoClient}
 import ch.derlin.langid.processing.PageProcessor
 import org.apache.log4j.LogManager

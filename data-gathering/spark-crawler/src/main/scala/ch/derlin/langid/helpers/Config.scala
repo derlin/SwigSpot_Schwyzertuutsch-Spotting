@@ -2,7 +2,7 @@ package ch.derlin.langid.helpers
 
 import java.util.Properties
 
-import ch.derlin.langid.Result
+import ch.derlin.langid.data.Result
 import org.apache.log4j.LogManager
 import org.apache.spark.SparkConf
 

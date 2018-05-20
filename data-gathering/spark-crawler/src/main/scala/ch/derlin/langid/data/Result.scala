@@ -1,4 +1,4 @@
-package ch.derlin.langid
+package ch.derlin.langid.data
 
 import java.net.URL
 

@@ -1,7 +1,7 @@
 package ch.derlin.langid.helpers
 
 
-import ch.derlin.langid.{Result, Summary}
+import ch.derlin.langid.data.{Result, Summary}
 import org.mongodb.scala.{Completed, Observer}
 
 import scala.concurrent.{Await, Future}
@@ -61,12 +61,12 @@ object MongoClient {
 }
 
 /**
-  * A MongoDB client especially made for storing [[ch.derlin.langid.Result]] and [[ch.derlin.langid.Summary]].
+  * A MongoDB client especially made for storing [[Result]] and [[Summary]].
   *
   * @param connectionUrl         the mongo url, for example `mongodb://localhost:27017`
   * @param dbName                the name of the mongo database, for example `sg`
-  * @param collectionName        the name of the collection used to store the [[ch.derlin.langid.Result]], for example `sentences`
-  * @param summaryCollectionName the name of the collection used to store the [[ch.derlin.langid.Summary]], for example `log`
+  * @param collectionName        the name of the collection used to store the [[data.Result]], for example `sentences`
+  * @param summaryCollectionName the name of the collection used to store the [[data.Summary]], for example `log`
   * @return the mongo client
   */
 class MongoClient(connectionUrl: String, dbName: String, collectionName: String, summaryCollectionName: String) {
