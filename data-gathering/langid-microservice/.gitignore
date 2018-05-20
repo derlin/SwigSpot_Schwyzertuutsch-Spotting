@@ -1,0 +1,7 @@
+venv
+*.pyc
+__pycache__
+langid_pb2*
+*.pickle
+.vscode 
+*.java

@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package ch.derlin.langid;
+option java_package = "ch.derlin.langid.generated";
+
+message Empty {}
+
+message Query {
+    string sentence = 1;
+    bool return_text = 2;
+}
+
+message QueryMultiple {
+    repeated string sentences = 1;
+    bool return_text = 2;
+}
+
+message Labels {
+    repeated string values = 1;
+}
+
+message Prediction {
+    int32 result = 1;
+    repeated float proba = 2;
+    string text = 3;
+}
+
+message Predictions {
+    repeated Prediction predictions = 2;
+}
+
+message Version {
+    int32 number = 1;
+    string description = 2;
+}
+
+service Langid {
+    rpc GetLabels(Empty) returns (Labels);
+    rpc Predict(Query) returns (Prediction);
+    rpc PredictAll(QueryMultiple) returns (Predictions);
+    rpc GetVersion(Empty) returns (Version);
+}

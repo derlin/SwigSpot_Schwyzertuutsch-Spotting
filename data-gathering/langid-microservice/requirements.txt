@@ -1,0 +1,8 @@
+grpcio==1.10.0
+grpcio-tools==1.10.0
+numpy==1.14.2
+protobuf==3.5.2.post1
+scikit-learn==0.19.1
+scipy==1.0.1
+six==1.11.0
+sklearn==0.0
