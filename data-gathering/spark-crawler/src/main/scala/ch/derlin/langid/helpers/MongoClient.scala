@@ -1,7 +1,10 @@
 package ch.derlin.langid.helpers
 
 
+import java.net.InetAddress
+
 import ch.derlin.langid.data.{Result, Summary}
+import org.apache.log4j.LogManager
 import org.mongodb.scala.{Completed, Observer}
 
 import scala.concurrent.{Await, Future}
@@ -18,9 +21,19 @@ object MongoClient {
     * See the [[ch.derlin.langid.helpers.MongoClient]] constructor for details about the parameters.
     */
   def get(connectionUrl: String, dbName: String, collectionName: String, summaryCollectionName: String = "log"): MongoClient = {
-    if (client == null) client = new MongoClient(connectionUrl, dbName, collectionName, summaryCollectionName)
+    if (client == null) {
+      client = new MongoClient(connectionUrl, dbName, collectionName, summaryCollectionName)
+      LogManager.getLogger(getClass.getName).info(s"Created a new Mongo client on ${InetAddress.getLocalHost}.")
+    }
     client
   }
+
+  /**
+    * Get a MongoClient using the parameters in the configuration object.
+    * @param conf The configuration
+    * @return The client.
+    */
+  def get(conf: Config): MongoClient = get(conf.mongoUrl, conf.mongoDB, conf.mongoColl, conf.mongoSummaryColl)
 
   /**
     * An observer printing to the console on error, next and complete events.

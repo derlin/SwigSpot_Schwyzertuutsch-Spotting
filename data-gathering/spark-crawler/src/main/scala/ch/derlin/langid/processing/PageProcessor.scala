@@ -1,6 +1,7 @@
 package ch.derlin.langid.processing
 
 import ch.derlin.langid.data.Result
+import ch.derlin.langid.generated.Version
 import ch.derlin.langid.helpers.{GrpcClient, TextExtractor}
 
 
@@ -9,6 +10,7 @@ class PageProcessor(client: GrpcClient,
                     filterSentence: String => Boolean = _ => true,
                     filterResult: Result => Boolean = _ => true) {
 
+  val modelVersion: Version = client.version
   val (sentences: Seq[(String, Int)], title: String, exception: Option[Exception]) = scape
   lazy val results: Seq[Result] = predict
 

@@ -17,7 +17,7 @@ import org.mongodb.scala.bson.ObjectId
 object Summary {
   val maxExceptionLength = 100
 
-  def apply(p: PageProcessor, v: Version): Summary = Summary(p.url, p.sentences.length, p.results.length, p.exception, v)
+  def apply(p: PageProcessor): Summary = Summary(p.url, p.sentences.length, p.results.length, p.exception, p.modelVersion)
 
   def apply(url: String, cnt: Int, sg: Int, ex: Option[Throwable], v: Version): Summary =
     Summary(new ObjectId(), url, cnt, sg,
