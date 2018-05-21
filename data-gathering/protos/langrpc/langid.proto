@@ -1,42 +1,77 @@
+/**
+ * Language prediction service.
+ */
+
 syntax = "proto3";
 
 package ch.derlin.langid;
 option java_package = "ch.derlin.langid.generated";
 
+/**
+ * Represents a query without arguments.
+ */
 message Empty {}
 
+/**
+ * Represents a query for sentence's language prediction.
+ */
 message Query {
-    string sentence = 1;
-    bool return_text = 2;
+    string sentence = 1;    /// Sentence to process.
+    bool return_text = 2;   /// Whether or not to include the sentence in the response.
 }
 
+/**
+ * Represents a query for multiple sentence's language prediction.
+ */
 message QueryMultiple {
-    repeated string sentences = 1;
-    bool return_text = 2;
+    repeated string sentences = 1; /// List of sentences to process.
+    bool return_text = 2;          /// Whether or not to include the sentence in the response.
 }
 
+/**
+ * Represents the language labels as an array of text.
+ *
+ * The order corresponds to the order of probabilities and the label index in a
+ * prediction.
+ */
 message Labels {
-    repeated string values = 1;
+    repeated string values = 1; /// List of labels (as text) in the same order as the returned probabilities
 }
 
+/**
+ * Represents a prediction.
+ */
 message Prediction {
-    int32 result = 1;
-    repeated float proba = 2;
-    string text = 3;
+    int32 result = 1;         /// Index of the predicted label.
+    repeated float proba = 2; /// List of probabilities, one for each label.
+    string text = 3;          /// Sanitized text (optional).
 }
 
+/**
+ * Represents multiple predictions, one for each sentence in the query.
+ */
 message Predictions {
     repeated Prediction predictions = 2;
 }
 
+/**
+ * Represents the version of the langugage identifier model used internally.
+ */
 message Version {
-    int32 number = 1;
-    string description = 2;
+    int32 number = 1;        /// Version number of the model. 
+    string description = 2;  /// Text description of the model.
 }
 
+/**
+ * Service for predicting language.
+ */
 service Langid {
+    /// Used to get the list of labels as text. Pass in an Empty and Labels will be returned.
     rpc GetLabels(Empty) returns (Labels);
+    /// Used to predict the language of a sentence. Pass in a Query and a Prediction will be returned.
     rpc Predict(Query) returns (Prediction);
+    /// Used to predict the language of multiple sentences. Pass in a QueryMultiple and Predictions will be returned.
     rpc PredictAll(QueryMultiple) returns (Predictions);
+    /// Used to retrieve the current version of the langid model. Pass in a Query and a Version will be returned.
     rpc GetVersion(Empty) returns (Version);
 }
