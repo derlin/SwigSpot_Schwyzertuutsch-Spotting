@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint
 
 from flask import Flask, render_template, request, flash
@@ -68,10 +70,11 @@ def crawl():
 
     try:
         results = langid.mixed_sentences_from_urls(
-            form.url.data, extractor_name=form.extractor_class.data, model=form.model_class.data,
+            form.url.data.strip(), extractor_name=form.extractor_class.data, model=form.model_class.data,
             with_proba=True, min_words=form.wMin.data, return_raw=form.return_raw.data)
     except Exception as e:
         flash('Something went wrong %s' % e, 'danger')
+        logging.exception(e)
         return dict(form=form)
     return dict(form=form, results=results, labels=langid.DEFAULT_LABELS)
 
