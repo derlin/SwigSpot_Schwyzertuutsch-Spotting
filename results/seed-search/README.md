@@ -69,3 +69,7 @@ max  :       553307.00  561059.00
      + _wär chamer_:who can help/give me..
 
 - `as-collection.json`: the dump of all records in the mongo collection `as` (article sentences)
+
+- `sentences-only.txt`: all original sentences, one per line. Contains duplicates !
+
+- `sentences-only-san.txt`: all sanitized sentences, one per line. Contains duplicates !
