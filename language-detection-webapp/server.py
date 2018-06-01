@@ -1,4 +1,5 @@
 from flask import Flask
+import click 
 
 from blueprints.langid import blueprint_langid
 
@@ -29,9 +30,20 @@ def get_color(label, probas=None):
         color += '%02x' % (int(probas[label] * 255))
     return color
 
-
-if __name__ == "__main__":
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
+def init_app():
     app.jinja_env.globals.update(color=get_color)
     app.jinja_env.globals.update(format_proba=format_proba)
-    app.run(port=8080, debug=True)
+
+@click.command()
+@click.option('--debug', '-d', default=False, is_flag=True, help="If set, launch Flask in DEBUG mode.")
+@click.option('--host', '-h', default="localhost",  help="Listen address.")
+@click.option('--port', '-p', default=8080, type=int, help="Listen port.")
+def run(debug, host, port):
+    if debug:
+        app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+    init_app()
+    app.run(host=host, port=port, debug=debug)
+
+if __name__ == "__main__":
+    run()

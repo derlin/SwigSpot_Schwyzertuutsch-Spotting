@@ -1,4 +1,4 @@
-alphabet-detector==0.0.7
+scipy==1.0.1
 charade==1.0.3
 click==6.7
 Flask==0.12.2
@@ -9,7 +9,6 @@ JPype1-py3==0.5.5.2
 MarkupSafe==1.0
 numpy==1.14.2
 scikit-learn==0.19.1
-scipy==1.0.1
 sklearn==0.0
 Werkzeug==0.14.1
 WTForms==2.1
