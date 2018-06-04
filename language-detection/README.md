@@ -24,7 +24,7 @@ All the experiments are done in Jupyter Notebooks.
 
 ## Setup
 
-Within anaconda, you need at least a python 3 environment. I personnally used the default environment for all notebooks except the one using Keras. For this one, a new virtual environment within anaconda was created, called `keras-tf`. 
+Within anaconda, you need at least a python 3 environment. I personnally used the default environment for all notebooks except the one using Keras. For this one, a new virtual environment within anaconda was created, called `keras-tf` (see [this gist](https://gist.github.com/jeffgreenca/28e0fe58644b8af48f97a3e18fe08302) for more information on how to install Keras+Tensorflow in Anaconda). 
 
 To get started, simply launch anaconda _from this folder_ (and not inside the `notebooks` folder). This is important for the imports to work.
 
