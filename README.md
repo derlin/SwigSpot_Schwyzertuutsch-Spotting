@@ -15,7 +15,7 @@ The repository is structured as such:
 * `language-detection`: contains all the notebooks and scripts testing various Machine Learning techniques for Swiss German language identification.
 * `language-detection-webapp`: a little Python 3 / Flask webapp for quickly scraping an URL and display the results after language identification;
 * `data-gathering`: contains everything related to Web scraping, including a distributed Spark crawler and scripts to gather URLs using query search engines.
-
+* `results`: contains the results obtained by scraping the _.ch domain_ and by using the _search engine approach_;
+* `other`: contains the report and the presentations.
 
 Each repository contains a README with further explanations.
-

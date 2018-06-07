@@ -60,3 +60,24 @@ docker run --rm -v %cd%:/user/app -w /user/app znly/protoc --grpc-java_out=. --j
 ```
 
 For linux and max, simply replace `%cd%` with `$(pwd)`. The generate java files can then be imported to your project (just beware of the package, which cannot be changed. If no package is set, simply put the generated files at the root).
+
+## Run on Docker containers
+
+First, build the image using the available `Dockerfile` :
+
+```shell
+docker build -t langid-grpc --rm .
+```
+
+Launch the server:
+```shell
+docker run --rm -d -p 50051:50051 langrpc
+```
+Done.
+
+You can also run the client (interactive mode) on Docker using:
+```shell
+docker run -it --rm --net=host langrpc python -m langrpc.client
+```
+__Important__: don't forget the `--net=host` so that the client container
+can connect to the server using the host as a bridge.
