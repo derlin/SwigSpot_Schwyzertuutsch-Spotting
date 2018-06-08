@@ -26,4 +26,4 @@ The repository is structured as such:
 * `results`: contains the results obtained by scraping the _.ch domain_ and by using the _search engine approach_;
 * `other`: contains the PDFs of various presentations made during the project.
 
-Each repository contains a README with further explanations.
+Each folder contains a README with further explanations.
