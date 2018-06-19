@@ -2,6 +2,8 @@
 
 The dataset has been created using the scripts under `/dataset`.
 
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vQuArDEmAfaOInDV6Y3FVUymfmN4h015PqJ114Bs3bpnXcsU9L8OnoiOJezDEKYM5oC8Jn2z4cODx2R/pub?w=960&amp;h=720">
+
 ### Train / test set
 
 Created using `get_quickstart_dataset`, which will create 5 files (one per language), each containing 7387 sentences.
