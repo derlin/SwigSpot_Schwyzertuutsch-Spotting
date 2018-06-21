@@ -59,14 +59,14 @@ Using docker on Windows:
 docker run --rm -v %cd%:/user/app -w /user/app znly/protoc --grpc-java_out=. --java_out=. -I. langid.proto
 ```
 
-For linux and max, simply replace `%cd%` with `$(pwd)`. The generate java files can then be imported to your project (just beware of the package, which cannot be changed. If no package is set, simply put the generated files at the root).
+For linux and mac simply replace `%cd%` with `$(pwd)` (or `${PWD}` in PowerShell). The generated java files can then be imported to your project (just beware of the package, which cannot be changed. If no package is set, simply put the generated files at the root).
 
 ## Run on Docker containers
 
 First, build the image using the available `Dockerfile` :
 
 ```shell
-docker build -t langid-grpc --rm .
+docker build -t langrpc --rm .
 ```
 
 Launch the server:
