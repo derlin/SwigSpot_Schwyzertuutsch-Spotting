@@ -11,7 +11,9 @@ This project is a Master’s Deepening Project proposed by Swisscom’s new Arti
 
 ## Report
 
-The report in print or online format is available [here](https://gitlab.com/LucyLinder/schwyzertuutsch-report/-/jobs/73385224/artifacts/browse).
+The report in print or online format is available at the root of this repo.
+
+<!-- The report in print or online format is available [here](https://gitlab.com/LucyLinder/schwyzertuutsch-report/-/jobs/73385224/artifacts/browse). -->
 
 ## Structure of the repository
 
