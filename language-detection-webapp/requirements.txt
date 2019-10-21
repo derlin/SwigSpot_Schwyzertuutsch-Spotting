@@ -10,6 +10,6 @@ MarkupSafe==1.0
 numpy==1.14.2
 scikit-learn==0.19.1
 sklearn==0.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 WTForms==2.1
 git+https://github.com/derlin/boilerpipe3.git
